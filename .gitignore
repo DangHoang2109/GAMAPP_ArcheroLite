@@ -3,3 +3,6 @@
 *.sln
 Library/
 Logs/
+.vs/
+obj/
+Temp/
