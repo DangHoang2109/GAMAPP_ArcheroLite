@@ -13,4 +13,7 @@ public class Bullet : MonoBehaviour
         Vector3 direction = Quaternion.Euler(0, 0, angle) * Vector3.up;
         this.transform.position += bulletSpeed * Time.deltaTime * direction; // direction;
     }
+
+
+    
 }

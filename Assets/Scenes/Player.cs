@@ -143,4 +143,7 @@ public class Player : MonoBehaviour
             this.transform.position += new Vector3(x: 0, y: -1, z: 0) * Time.deltaTime * speed;
         }
     }
+
+
+    //Đầu game -> sinh ra 5 enemy ngẫu nhiên trên màn hình
 }
