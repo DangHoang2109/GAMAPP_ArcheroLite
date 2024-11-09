@@ -12,14 +12,37 @@ public class Player : MonoBehaviour
     {
         Debug.Log("đây là start");
     }
+
+    public float _thoigianBan = 0.5f;//s
+    public float _timerTGBan = 0f;
     // Update is called once per frame
     void Update()
     {
         //Di chuyển
         Movement();
 
+        //timer auto shoot
+        _timerTGBan += Time.deltaTime;
+        if(_timerTGBan >= _thoigianBan)
+        {
+            Fire();
+            _timerTGBan = 0;
+        }
+    }
+    /// <summary>
+    /// bắn đạn
+    /// </summary>
+    void Fire()
+    {
+        //_dan = this._dan = viên đạn gốc
+        Bullet _danVuaBanRa = Instantiate(_dan, _nongSung.transform.position, Quaternion.identity);
+        //sửa góc viên đạn vừa bắn 
+        _danVuaBanRa.angle = this.transform.rotation.eulerAngles.z ;
     }
 
+    public Bullet _dan;
+    //vị trí muốn đạn được bắn ra
+    public Transform _nongSung;
     /// <summary>
     /// code di chuyển mới: biến đổi đều
     /// Cách 1: Dùng API của Unity: Input.GetAxis -> 2 chiều horizontal và vertical, return 1 số từ -1 đến 1 tùy theo chiều user nhấn và thời gian nhấn
