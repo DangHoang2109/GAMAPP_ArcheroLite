@@ -18,16 +18,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Di chuyển
-        Movement();
+        //Đã tách hàm Di chuyển
+        bool isMoving = Movement();
 
         //timer auto shoot
-        _timerTGBan += Time.deltaTime;
-        if(_timerTGBan >= _thoigianBan)
+        //if Moving: Không đếm timer
+        if (!isMoving)
         {
-            Fire();
-            _timerTGBan = 0;
+            _timerTGBan += Time.deltaTime;
+            if (_timerTGBan >= _thoigianBan)
+            {
+                Fire();
+                _timerTGBan = 0;
+            }
         }
+
     }
     /// <summary>
     /// bắn đạn
@@ -52,8 +57,9 @@ public class Player : MonoBehaviour
     /// Cách 1: Kiểm tra bằng tay: thấy X trong khoảng [-9.8, 9.8] y trong khoảng [-4.3,4.3]
     /// Cách 2: Buổi 2 khi học về vật lý + va chạm: setup 4 bức tường ở rìa camera
     /// Cách 3: Camera.main để tính screenBound -> không cho position hơn screen bound
+    /// return: bool => true nếu Player di chuyển, false nếu player đứng im
     /// </summary>
-    void Movement()
+    bool Movement()
     {
         //Cách 1: "Horizontal" hoặc "Vertical"
         //return -1 nếu đi về bên trái
@@ -73,7 +79,10 @@ public class Player : MonoBehaviour
             float angel = Mathf.Atan2(move.y, move.x) * Mathf.Rad2Deg;
 
             transform.rotation = Quaternion.Euler(0, 0, angel - 90f);
+            return true;
         }
+        else
+            return false;
     }
 
     Vector3 CheckPositionWithCamera_Approach3(float horizontal, float vertical)
